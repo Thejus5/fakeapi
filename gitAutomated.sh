@@ -57,7 +57,11 @@ getCurrendConfigs() {
 }
 
 pushWithCred (){
-	git push origin "$1"
+	# git push origin "$1"
+	echo "branch $1"
+	echo "save $2"
+	echo "time $3"
+	echo "forUser $4"
 }
 
 help() {
@@ -111,7 +115,7 @@ if [ $# -gt 0 ]; then
 		shift
 		;;
 	push)
-		pushWithCred "$2"
+		pushWithCred "$2" "$3" "$4" "$5"
 		shift
 		;;
 	*)
