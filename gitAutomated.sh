@@ -33,7 +33,7 @@ configureGit() {
 }
 
 clearConfigs() {
-	git credential-cache exit
+	dropcachedCredentials
 	git config --global --unset-all user.name
 	git config --global --unset-all user.email
 	echo ">>> Deleted global git configs"
@@ -60,6 +60,7 @@ getCurrendConfigs() {
 pushWithCred() {
 	if test -z "$1"; then
 		echo "please enter a brach to push."
+		echo "use -h or --help to see usage"
 	elif [ $1 != "save" ]; then
 		if test -z "$2"; then
 			git push origin "$1"
@@ -69,6 +70,7 @@ pushWithCred() {
 			git push origin "$1"
 		else
 			echo "incorrect argument."
+			echo "use -h or --help to see usage"
 		fi
 	else
 		echo "save cannot be a branch name. Sorry"
@@ -76,18 +78,26 @@ pushWithCred() {
 	# git push origin "$1"
 }
 
+dropcachedCredentials (){
+	git credential-cache exit
+	echo ">>> Cleared cached credentials"
+}
+
 help() {
 	echo "COMMANDS HELP"
 	echo " "
 	echo "options:"
-	echo " -h, --help                show brief help"
-	echo " -per                      set personal profile as git config in global (BugmanPy)"
-	echo " -prof                     set work profile as git config in global (Thejus5)"
-	echo " -mad                      set mad project profile as git config in global (mad-meenu)"
-	echo " -star                     set Starsona project profile as git config in global (sabir)"
-	echo " -cl, --clear              clear the global config"
-	echo " -c, --custom              create custom global config"
-	echo " -l, --list                show current global configs"
+	echo " -h, --help                Show brief help"
+	echo " -per                      Set personal profile as git config in global (BugmanPy)"
+	echo " -prof                     Set work profile as git config in global (Thejus5)"
+	echo " -mad                      Set mad project profile as git config in global (mad-meenu)"
+	echo " -star                     Set Starsona project profile as git config in global (sabir)"
+	echo " -cl, --clear              Clear the global config and remove cached credentials"
+	echo " -c, --custom              Create custom global config"
+	echo " push <branch> save        Push to <branch> in origin by caching login credentials for 24 hours. Just have to do this once"
+	echo " push <branch>             Push to <branch> in origin without credential caching. You have to enter username and password each time you push"
+	echo " dropcache                 Clear all saved credentials from cache"
+	echo " -l, --list                Show current global configs"
 }
 
 # ----- Actions ----- #
@@ -128,6 +138,10 @@ if [ $# -gt 0 ]; then
 		;;
 	push)
 		pushWithCred "$2" "$3"
+		shift
+		;;
+	dropcache)
+		dropcachedCredentials
 		shift
 		;;
 	*)
