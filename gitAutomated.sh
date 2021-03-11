@@ -9,7 +9,7 @@ personal_email="thejus10011@gmail.com"
 personal_pass="714cdd971c7f66ea8e3d26560c5fec0358dc23af"
 
 prof_username="Thejus5"
-prof_email="thejus@qburst.com"
+prof_email="thejuss@qburst.com"
 prof_pass="thejusqburst@github0"
 
 star_username="sabir"
