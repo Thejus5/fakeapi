@@ -56,12 +56,25 @@ getCurrendConfigs() {
 	fi
 }
 
-pushWithCred (){
+pushWithCred() {
+	if test -z "$1"; then
+		echo "please enter a brach to push."
+	elif [ $1 != "save" ]; then
+		if test -z "$2"; then
+			echo "Credentials wont be saved."
+			git push origin "$1"
+		elif [ $2 == "save" ]; then
+			echo "Credentials will be catched for 24 hrs."
+			git config credential.helper 'cache --timeout=86400'
+			git push origin "$1"
+			# echo "push origin $1"
+		else
+			echo "incorrect argument."
+		fi
+	else
+		echo "save cannot be a branch name. Sorry"
+	fi
 	# git push origin "$1"
-	echo "branch $1"
-	echo "save $2"
-	echo "time $3"
-	echo "forUser $4"
 }
 
 help() {
@@ -115,7 +128,7 @@ if [ $# -gt 0 ]; then
 		shift
 		;;
 	push)
-		pushWithCred "$2" "$3" "$4" "$5"
+		pushWithCred "$2" "$3"
 		shift
 		;;
 	*)
