@@ -62,13 +62,11 @@ pushWithCred() {
 		echo "please enter a brach to push."
 	elif [ $1 != "save" ]; then
 		if test -z "$2"; then
-			echo "Credentials wont be saved."
 			git push origin "$1"
 		elif [ $2 == "save" ]; then
 			echo "Credentials will be catched for 24 hrs."
 			git config credential.helper 'cache --timeout=86400'
 			git push origin "$1"
-			# echo "push origin $1"
 		else
 			echo "incorrect argument."
 		fi
