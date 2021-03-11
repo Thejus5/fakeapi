@@ -75,7 +75,6 @@ pushWithCred() {
 	else
 		echo "save cannot be a branch name. Sorry"
 	fi
-	# git push origin "$1"
 }
 
 dropcachedCredentials (){
