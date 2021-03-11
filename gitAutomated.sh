@@ -33,6 +33,7 @@ configureGit() {
 }
 
 clearConfigs() {
+	git credential-cache exit
 	git config --global --unset-all user.name
 	git config --global --unset-all user.email
 	echo ">>> Deleted global git configs"
